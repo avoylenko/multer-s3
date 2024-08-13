@@ -1,11 +1,11 @@
-var crypto = require('crypto')
-var stream = require('stream')
+const crypto = require('crypto')
+const stream = require('stream')
 const { fromBuffer } = require('file-type')
-var htmlCommentRegex = require('html-comment-regex')
-var parallel = require('run-parallel')
-var Upload = require('@aws-sdk/lib-storage').Upload
-var DeleteObjectCommand = require('@aws-sdk/client-s3').DeleteObjectCommand
-var util = require('util')
+const htmlCommentRegex = require('html-comment-regex')
+const parallel = require('run-parallel')
+const Upload = require('@aws-sdk/lib-storage').Upload
+const DeleteObjectCommand = require('@aws-sdk/client-s3').DeleteObjectCommand
+const util = require('util')
 
 function staticValue (value) {
   return function (req, file, cb) {
@@ -13,20 +13,20 @@ function staticValue (value) {
   }
 }
 
-var defaultAcl = staticValue('private')
-var defaultContentType = staticValue('application/octet-stream')
+const defaultAcl = staticValue('private')
+const defaultContentType = staticValue('application/octet-stream')
 
-var defaultMetadata = staticValue(undefined)
-var defaultCacheControl = staticValue(null)
-var defaultContentDisposition = staticValue(null)
-var defaultContentEncoding = staticValue(null)
-var defaultStorageClass = staticValue('STANDARD')
-var defaultSSE = staticValue(null)
-var defaultSSEKMS = staticValue(null)
+const defaultMetadata = staticValue(undefined)
+const defaultCacheControl = staticValue(null)
+const defaultContentDisposition = staticValue(null)
+const defaultContentEncoding = staticValue(null)
+const defaultStorageClass = staticValue('STANDARD')
+const defaultSSE = staticValue(null)
+const defaultSSEKMS = staticValue(null)
 
 // Regular expression to detect svg file content, inspired by: https://github.com/sindresorhus/is-svg/blob/master/index.js
 // It is not always possible to check for an end tag if a file is very big. The firstChunk, see below, might not be the entire file.
-var svgRegex = /^\s*(?:<\?xml[^>]*>\s*)?(?:<!doctype svg[^>]*>\s*)?<svg[^>]*>/i
+const svgRegex = /^\s*(?:<\?xml[^>]*>\s*)?(?:<!doctype svg[^>]*>\s*)?<svg[^>]*>/i
 
 function isSvg (svg) {
   // Remove DTD entities
@@ -47,8 +47,8 @@ function defaultKey (req, file, cb) {
 
 function autoContentType (req, file, cb) {
   file.stream.once('data', async (firstChunk) => {
-    var type = await fromBuffer(firstChunk)
-    var mime = 'application/octet-stream' // default type
+    const type = await fromBuffer(firstChunk)
+    let mime = 'application/octet-stream' // default type
 
     // Make sure to check xml-extension for svg files.
     if ((!type || type.ext === 'xml') && isSvg(firstChunk.toString())) {
@@ -57,7 +57,7 @@ function autoContentType (req, file, cb) {
       mime = type.mime
     }
 
-    var outStream = new stream.PassThrough()
+    const outStream = new stream.PassThrough()
 
     outStream.write(firstChunk)
     file.stream.pipe(outStream)
@@ -92,8 +92,8 @@ function collect (storage, req, file, cb) {
         cacheControl: values[4],
         contentDisposition: values[5],
         storageClass: values[6],
-        contentType: contentType,
-        replacementStream: replacementStream,
+        contentType,
+        replacementStream,
         serverSideEncryption: values[7],
         sseKmsKeyId: values[8],
         contentEncoding: values[9]
@@ -187,9 +187,9 @@ S3Storage.prototype._handleFile = function (req, file, cb) {
   collect(this, req, file, function (err, opts) {
     if (err) return cb(err)
 
-    var currentSize = 0
+    let currentSize = 0
 
-    var params = {
+    const params = {
       Bucket: opts.bucket,
       Key: opts.key,
       ACL: opts.acl,
@@ -211,9 +211,9 @@ S3Storage.prototype._handleFile = function (req, file, cb) {
       params.ContentEncoding = opts.contentEncoding
     }
 
-    var upload = new Upload({
+    const upload = new Upload({
       client: this.s3,
-      params: params
+      params
     })
 
     upload.on('httpUploadProgress', function (ev) {
