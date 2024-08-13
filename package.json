@@ -26,20 +26,20 @@
   },
   "homepage": "https://github.com/badunk/multer-s3#readme",
   "dependencies": {
-    "@aws-sdk/lib-storage": "^3.46.0",
-    "file-type": "^16.5.4",
-    "run-parallel": "^1.1.6"
+    "@aws-sdk/lib-storage": "^3.629.0",
+    "file-type": "^19.4.0",
+    "run-parallel": "^1.2.0"
   },
   "peerDependencies": {
-    "@aws-sdk/client-s3": "^3.0.0"
+    "@aws-sdk/client-s3": "^3.629.0"
   },
   "devDependencies": {
-    "express": "^4.13.1",
-    "form-data": "^1.0.0-rc3",
-    "mocha": "^2.2.5",
-    "multer": "^1.1.0",
-    "on-finished": "^2.3.0",
-    "standard": "^10.0.3",
-    "xtend": "^4.0.1"
+    "express": "^4.19.2",
+    "form-data": "^4.0.0",
+    "mocha": "^10.7.3",
+    "multer": "^1.4.5-lts.1",
+    "on-finished": "^2.4.1",
+    "standard": "^17.1.0",
+    "xtend": "^4.0.2"
   }
 }
