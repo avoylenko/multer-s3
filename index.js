@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 const stream = require('stream')
 const { fromBuffer } = require('file-type')
-const htmlCommentRegex = require('html-comment-regex')
+const htmlCommentRegex = /<!--((?:(?!<!--)[\s\S])*?)-->/g
 const parallel = require('run-parallel')
 const Upload = require('@aws-sdk/lib-storage').Upload
 const DeleteObjectCommand = require('@aws-sdk/client-s3').DeleteObjectCommand
