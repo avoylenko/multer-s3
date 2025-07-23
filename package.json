@@ -1,6 +1,6 @@
 {
   "name": "@avoylenko/multer-s3",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Streaming multer storage engine for S3",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/avoylenko/multer-s3#readme",
   "dependencies": {
-    "@aws-sdk/lib-storage": "^3.821.0",
-    "file-type": "^20.5.0",
+    "@aws-sdk/lib-storage": "^3.850.0",
+    "file-type": "^21.0.0",
     "run-parallel": "^1.2.0"
   },
   "peerDependencies": {
